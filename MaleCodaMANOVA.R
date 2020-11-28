@@ -1,4 +1,4 @@
-### R Code for Clink et al. A multivariate analysis of female Bornean gibbon calls reveals substantial inter-individual variation and site-level variation in trill rate 
+### R Code to investigate geographic variation
 
 ### MANOVA Model Code 
 ### Load required libraries 
