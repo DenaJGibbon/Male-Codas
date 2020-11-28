@@ -1,0 +1,4 @@
+Selection	View	Channel	Begin Time (s)	End Time (s)	Low Freq (Hz)	High Freq (Hz)	BW 90% (Hz)	Dur 90% (s)	Freq 5% (Hz)	Freq 95% (Hz)	Call type
+1	Spectrogram 1	1	0.226915072	16.678257795	471.455	1431.204	301.465	9.1973	656.763	958.228	Great.call
+2	Spectrogram 1	1	18.635400291	19.089230435	597.738	1018.680	236.865	0.1633	699.829	936.694	male.coda
+3	Spectrogram 1	1	19.117594819	19.855068803	622.995	968.167	129.199	0.3810	753.662	882.861	male.coda
