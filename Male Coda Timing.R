@@ -5,11 +5,12 @@ library(ggplot2)
 library(lme4)
 library(bbmle)
 library(ggpubr)
+library(plyr)
 
 # Isolate file names
-files <- list.files('/Users/denasmacbook/Downloads/DuetTimingSelectionTables',recursive = T,
+files <- list.files('DuetTimingSelectionTables',recursive = T,
                     full.names = T,pattern = '.txt')
-short.files <- list.files('/Users/denasmacbook/Downloads/DuetTimingSelectionTables',recursive = T,
+short.files <- list.files('DuetTimingSelectionTables',recursive = T,
                           full.names = F,pattern = '.txt')
 
 short.files <- str_split_fixed(short.files,pattern = '/',n=2)[,2]

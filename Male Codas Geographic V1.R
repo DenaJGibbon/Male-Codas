@@ -7,9 +7,9 @@ library(plyr)
 
 # V1 focus only on codas that were annotated in the same way
 
-files <- list.files('/Users/denasmacbook/Downloads/DuetTimingSelectionTables',recursive = T,
+files <- list.files('DuetTimingSelectionTables',recursive = T,
            full.names = T,pattern = '.txt')
-short.files <- list.files('/Users/denasmacbook/Downloads/DuetTimingSelectionTables',recursive = T,
+short.files <- list.files('DuetTimingSelectionTables',recursive = T,
                           full.names = F,pattern = '.txt')
 
 short.files <- str_split_fixed(short.files,pattern = '/',n=2)[,2]
@@ -132,6 +132,8 @@ AICctab(complexitymodel,complexitymodel.null)
 coefplot::coefplot(complexitymodel,intercept=F)
 
 sjPlot::plot_model(complexitymodel,type='re')
+
+MuMIn::r.squaredGLMM(complexitymodel)
 
 # Note rate?
 complexitymodel.noterate <- lmer(noterate ~ seq + (1|site/individual),   data=complexity.df)
