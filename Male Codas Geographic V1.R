@@ -15,7 +15,7 @@ short.files <- list.files('DuetTimingSelectionTables',recursive = T,
 short.files <- str_split_fixed(short.files,pattern = '/',n=2)[,2]
 
 # Omit based on multiple recording days
-Files.ignore <- c(3,19,20,30,42,59,60,67,68,69,70,71,78,79,80)
+Files.ignore <- c(3,17,18,19,20,30,42,59,60,67,68,69,70,71,78,79,80)
 
 files <- files[-Files.ignore]
 short.files <- short.files[-Files.ignore]
@@ -86,10 +86,14 @@ note1minfreq <- temp.table[1,]$Freq.5...Hz.
 note1maxfreq <- temp.table[1,]$Freq.95...Hz.
 range.bw <- maxbw-minbw
 rest.dur <- call.dur - sum(temp.table$Dur.90...s.)
+lastnotedur <- temp.table[nrow(temp.table),]$Dur.90...s.
+lastnoteminfreq <- temp.table[nrow(temp.table),]$Freq.5...Hz.
+lastnotemaxfreq <- temp.table[nrow(temp.table),]$Freq.95...Hz.
 
 temp.coda.df <- cbind.data.frame(individual,call.id,call.dur,nnotes,
                                   min5,min95, minbw,maxbw,mean5,mean95,max5,max95,meanbw,mindurnote,
-                                 maxdurnote,noterate,note1dur,note1minfreq,note1maxfreq,range.bw,rest.dur)
+                                 maxdurnote,noterate,note1dur,note1minfreq,note1maxfreq,range.bw,rest.dur,
+                                 lastnotedur,lastnoteminfreq,lastnotemaxfreq )
 
 malecodadf <- rbind.data.frame(malecodadf,temp.coda.df)
 }
@@ -204,7 +208,7 @@ my_plot_males <-
 my_plot_males
 
 
-ml.model.svm.site <- e1071::svm(combined.codas.all.sites[,c(3:13,16)], 
+ml.model.svm.site <- e1071::svm(combined.codas.all.sites[,c(3:24)], 
                                 combined.codas.all.sites$Site, kernel = "radial", 
                                 cross = 25)
 
@@ -237,9 +241,10 @@ my_plot_male.individuals <-
 my_plot_male.individuals
 
 
-ml.model.svm <- e1071::svm(combined.codas.all.sites[,c(3:13,16)], 
+ml.model.svm <- e1071::svm(combined.codas.all.sites[,c(3:24)], 
                            combined.codas.all.sites$individual, kernel = "radial", 
                            cross = 25)
 
 
 ml.model.svm$tot.accuracy
+
