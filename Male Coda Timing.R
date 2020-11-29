@@ -6,6 +6,12 @@ library(lme4)
 library(bbmle)
 library(ggpubr)
 library(plyr)
+library(corrplot)
+library(bayesplot)
+library(rstan)
+rstan_options(auto_write=TRUE)
+options(mc.cores = parallel::detectCores())
+library(stringr)
 
 # Isolate file names
 files <- list.files('DuetTimingSelectionTables',recursive = T,
@@ -16,7 +22,7 @@ short.files <- list.files('DuetTimingSelectionTables',recursive = T,
 short.files <- str_split_fixed(short.files,pattern = '/',n=2)[,2]
 
 # Omit based on multiple recording days
-Files.ignore <- c(3,19,20,30,41,59,60,67,68,69,70,71,78,79,80)
+Files.ignore <- c(3,19,20,30,42,59,60,67,68,69,70,71,78,79,80)
 
 files <- files[-Files.ignore]
 short.files <- short.files[-Files.ignore]
@@ -130,7 +136,7 @@ d.manova.timing <- coda.timing.df[,c("coda.timing","coda.duration")]
 cor(d.manova.timing)
 
 ## Log transform data
-d.manova.timing <- log(d.manova.timing)
+d.manova.timing$coda.duration <- log(d.manova.timing$coda.duration)
 
 pairs(d.manova.timing)
 
@@ -168,7 +174,7 @@ data_list <- list(
 
 # Code to run the STAN model
 # NOTE: the .stan file must be linked in the code below
-coda.timing.stan = stan(file="/Users/denasmacbook/Desktop/MaleSoloUnsupervised/MANOVA.male codas.stan", 
+coda.timing.stan = stan(file="MANOVA.male codas.stan", 
                    model_name = "mfinal", 
                    data=data_list, iter=3000, warmup=1500, chains=2, 
                    cores=2, 

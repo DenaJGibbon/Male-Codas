@@ -1,6 +1,6 @@
-Selection	View	Channel	Begin Time (s)	End Time (s)	Low Freq (Hz)	High Freq (Hz)	Call type
-1	Spectrogram 1	1	40.435318260	54.387328931	572.5	1418.6	great.call
-2	Spectrogram 1	1	57.442283864	57.883205194	627.2	1018.7	male.coda
-3	Spectrogram 1	1	57.914699575	58.387115286	597.7	1001.8	male.coda
-4	Spectrogram 1	1	58.355620906	58.639070332	627.2	888.2	male.coda
-5	Spectrogram 1	1	220.968598462	235.991418079	576.7	1603.8	great.call
+Selection	View	Channel	Begin Time (s)	End Time (s)	Low Freq (Hz)	High Freq (Hz)	BW 90% (Hz)	Dur 90% (s)	Freq 5% (Hz)	Freq 95% (Hz)	Call type
+1	Spectrogram 1	1	40.435318260	54.387328931	572.500	1418.600	430.664	9.7143	656.763	1087.427	great.call
+2	Spectrogram 1	1	57.442283864	57.883205194	627.200	1018.700	204.565	0.2449	689.062	893.628	male.coda
+3	Spectrogram 1	1	57.914699575	58.387115286	597.700	1001.800	193.799	0.1905	710.596	904.395	male.coda
+4	Spectrogram 1	1	58.355620906	58.639070332	627.200	888.200	86.133	0.1361	689.062	775.195	male.coda
+5	Spectrogram 1	1	220.968598462	235.991418079	576.700	1603.800	452.197	11.4286	656.763	1108.960	great.call

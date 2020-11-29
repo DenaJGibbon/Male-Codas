@@ -16,6 +16,7 @@ library(stringr)
 colnames(combined.codas.all.sites)
 table(combined.codas.all.sites$individual)
 length(unique(combined.codas.all.sites$individual))
+nrow(combined.codas.all.sites)
 
 ggpubr::ggdensity(data=combined.codas.all.sites,x="noterate",fill = "site")+
   scale_fill_manual(values=matlab::jet.colors(length(unique(combined.codas.all.sites$site))))
@@ -28,11 +29,12 @@ ggpubr::ggboxplot(data=combined.codas.all.sites,x='individual',y='range.bw')
 hist(combined.codas.all.sites$call.dur)
 table(combined.codas.all.sites$site)
 hist((combined.codas.all.sites$minbw))
+hist(log(combined.codas.all.sites$nnotes))
 
 ## Isolate relevant features from data set
 # maxbw and max95 are highly correlated (0.9) so if we know max95 we have a pretty good idea of maxbw
 # rest dur and call.dur also correlated (0.8)
-d.manova <- combined.codas.all.sites[,c("rest.dur", "minbw","max95","noterate")]
+d.manova <- combined.codas.all.sites[,c("call.dur", "minbw","max95","noterate")]
 
 ## Check the structure of the data
 cor(d.manova)
@@ -112,7 +114,7 @@ round(summary(mfinal.stan, pars=c("DF_site"))$summary, 3)
 
 ## Extract site-specific random intercepts for max.freq rate
 site.intercepts <- extract(mfinal.stan, pars="site_rand_intercept")$site_rand_intercept
-max.freq.intercepts <- data.frame(site.intercepts[, , 1]) # Intercepts for the 8th feature. 
+max.freq.intercepts <- data.frame(site.intercepts[, , 3]) # Intercepts for the 8th feature. 
 names(max.freq.intercepts) <-levels(as.factor(combined.codas.all.sites$site))
 str(max.freq.intercepts)
 
@@ -157,7 +159,7 @@ ggplot(random.intercept.df.maxfreq, aes(x=samples, fill=site))+ geom_density(alp
 
 
 site.intercepts <- extract(mfinal.stan, pars="site_rand_intercept")$site_rand_intercept
-note.rate.intercepts <- data.frame(site.intercepts[, , 2]) # Intercepts for the 8th feature. 
+note.rate.intercepts <- data.frame(site.intercepts[, , 4]) # Intercepts for the 8th feature. 
 names(note.rate.intercepts) <-levels(as.factor(combined.codas.all.sites$site))
 str(note.rate.intercepts)
 
@@ -176,7 +178,7 @@ MB <- cbind.data.frame(note.rate.intercepts$MB, rep("Maliau (MB)",length(note.ra
 colnames(MB) <- c("samples","site")
 SAF <- cbind.data.frame(note.rate.intercepts$SA, rep("Kalabakan (KL)",length(note.rate.intercepts$SA)))
 colnames(SAF) <- c("samples","site")
-random.intercept.df.noterate <- rbind.data.frame(DK, DV, IC, KB,MB, SAF)
+random.intercept.df.noterate <- rbind.data.frame(CR,DK, DV, IC, KB,MB, SAF)
 
 # Check structure of data frame
 head(random.intercept.df.noterate)
