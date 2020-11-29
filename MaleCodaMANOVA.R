@@ -21,7 +21,7 @@ nrow(combined.codas.all.sites)
 ggpubr::ggdensity(data=combined.codas.all.sites,x="noterate",fill = "site")+
   scale_fill_manual(values=matlab::jet.colors(length(unique(combined.codas.all.sites$site))))
 
-ggpubr::ggdensity(data=combined.codas.all.sites,x="meanbw",fill = "site")+
+ggpubr::ggdensity(data=combined.codas.all.sites,x="maxbw",fill = "site")+
   scale_fill_manual(values=matlab::jet.colors(length(unique(combined.codas.all.sites$site))))
 
 ggpubr::ggboxplot(data=combined.codas.all.sites,x='individual',y='range.bw')

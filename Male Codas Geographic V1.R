@@ -135,7 +135,7 @@ AICctab(complexitymodel,complexitymodel.null)
 
 coefplot::coefplot(complexitymodel,intercept=F)
 
-sjPlot::plot_model(complexitymodel,type='re')
+sjPlot::plot_model(complexitymodel,type='eff')
 
 MuMIn::r.squaredGLMM(complexitymodel)
 
@@ -157,10 +157,12 @@ AICctab(complexitymodel.call.dur,complexitymodel.call.dur.null)
 
 coefplot::coefplot(complexitymodel.call.dur,intercept=F)
 
-sjPlot::plot_model(complexitymodel.call.dur.null,type='re')
+sjPlot::plot_model(complexitymodel.call.dur,type='eff')
 
 ggpubr::ggdensity(data=complexity.df,x='call.dur',fill='site')
 
+coefplot::multiplot(complexitymodel,complexitymodel.call.dur,
+                    intercept = F)+theme_bw()
 
 # Male coda types
 # cluster.df <- apcluster::apcluster(

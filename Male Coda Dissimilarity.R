@@ -5,10 +5,11 @@ library(spdep)
 
 male.gps.data <- read.csv('male.coda.gps.csv')
 gps.data.updated <- merge(combined.codas.all.sites,male.gps.data, by.x = 'individual', by.y = 'pair')
-gps.data.updated <- droplevels(subset(gps.data.updated, site=="SA"))
+gps.data.updated <- droplevels(subset(gps.data.updated, site=="DK"))
 
 gps.data.updated[which(is.na(gps.data.updated))]
 
+plot(gps.data.updated$lat,gps.data.updated$lon)
 
 geo_distance <- spDists(cbind(gps.data.updated$lon,gps.data.updated$lat),longlat = T)
 geo_matrix <- as.matrix(geo_distance)
@@ -41,7 +42,7 @@ resid_vecs <- subset(resid_vecs, subset=geo_vec >0)
 ### Calculate confidence intervals 
 acoustic.dist.dataframe<- cbind.data.frame(resid_vecs$geo_vec,resid_vecs$aco_vec)
 
-new.acoustic.data.frame <- subset(acoustic.dist.dataframe, resid_vecs$geo_vec>=0.5)
+new.acoustic.data.frame <- subset(acoustic.dist.dataframe, resid_vecs$geo_vec>=0.3)
 
 x <- new.acoustic.data.frame$`resid_vecs$geo_vec`
 y <- new.acoustic.data.frame$`resid_vecs$aco_vec`
