@@ -119,11 +119,11 @@ all.mfcc.combined.sub <- na.omit(all.mfcc.combined.sub)
 
 ml.model.svm <- e1071::svm(all.mfcc.combined.sub[,-c(1,2,180)], 
                            all.mfcc.combined.sub$group, kernel = "radial", 
-                           cross = nrow(all.mfcc.combined.sub))
+                           cross = 25)
 
 length(unique(all.mfcc.combined.sub$group))
 
-ml.model.svm$tot.accuracy
+ml.model.svm$tot.accuracy # LOOCV: 64.03712
 
 
 # Assign to new object to modify

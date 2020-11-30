@@ -116,6 +116,10 @@ combined.codas.all.sites$site[which(combined.codas.all.sites$individual=='CRIP')
 
 combined.codas.all.sites$Site <- as.factor(combined.codas.all.sites$site)
 
+combined.codas.all.sites <- 
+ droplevels(subset(combined.codas.all.sites, individual != 'ICGG14'))
+
+#combined.codas.all.sites <- subset(combined.codas.all.sites, call.dur >=1)
 
 # See increase in complexity over course of duet?
 pair.id <- unique(combined.codas.all.sites$individual)
@@ -135,7 +139,7 @@ AICctab(complexitymodel,complexitymodel.null)
 
 coefplot::coefplot(complexitymodel,intercept=F)
 
-sjPlot::plot_model(complexitymodel,type='eff')
+sjPlot::plot_model(complexitymodel,type='pred',show.data = T)
 
 MuMIn::r.squaredGLMM(complexitymodel)
 
@@ -159,7 +163,11 @@ coefplot::coefplot(complexitymodel.call.dur,intercept=F)
 
 sjPlot::plot_model(complexitymodel.call.dur,type='eff')
 
+sjPlot::plot_model(complexitymodel.call.dur,type='eff',show.data = T)
+
 ggpubr::ggdensity(data=complexity.df,x='call.dur',fill='site')
+
+ggpubr::ggscatter(data=complexity.df,x='seq',y='call.dur')
 
 coefplot::multiplot(complexitymodel,complexitymodel.call.dur,
                     intercept = F)+theme_bw()
@@ -186,6 +194,7 @@ coefplot::multiplot(complexitymodel,complexitymodel.call.dur,
 
 
 ## UMAP
+
 
 male.umap <- 
   umap::umap(combined.codas.all.sites[,c(3:13,16)],labels=as.factor(combined.codas.all.sites$Site),
@@ -221,7 +230,7 @@ ml.model.svm.site$tot.accuracy
 combined.codas.all.sites$individual <- as.factor(combined.codas.all.sites$individual)
 
 male.individual.umap <- 
-  umap::umap(combined.codas.all.sites[,c(3:13,16)],labels=as.factor(combined.codas.all.sites$individual),
+  umap::umap(combined.codas.all.sites[,c(3:24)],labels=as.factor(combined.codas.all.sites$individual),
              controlscale=TRUE,scale=3)
 
 plot.for.male.individuals <-

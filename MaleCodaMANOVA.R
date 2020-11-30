@@ -35,7 +35,7 @@ hist((combined.codas.all.sites$note1dur))
 ## Isolate relevant features from data set
 # maxbw and max95 are highly correlated (0.9) so if we know max95 we have a pretty good idea of maxbw
 # rest dur and call.dur also correlated (0.8)
-d.manova <- combined.codas.all.sites[,c("call.dur", "maxbw","note1dur","note1maxfreq",
+d.manova <- combined.codas.all.sites[,c("call.dur", "min95","note1dur","note1maxfreq",
                                         "noterate","lastnotedur","lastnotemaxfreq")]
 
 ## Check the structure of the data
