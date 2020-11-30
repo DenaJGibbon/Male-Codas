@@ -15,6 +15,7 @@ library(stringr)
 #combined.codas.all.sites <- malecodadf#read.csv("combined.codas.all.sites.csv")
 colnames(combined.codas.all.sites)
 table(combined.codas.all.sites$individual)
+table(combined.codas.all.sites$site)
 length(unique(combined.codas.all.sites$individual))
 nrow(combined.codas.all.sites)
 
@@ -86,7 +87,7 @@ mfinal.stan = stan(file="MANOVA.male codas.stan",
                    control = list(stepsize = 0.5, adapt_delta = 0.99, max_treedepth = 20))
 
 # Optional code to save the output
-#save(mfinal.stan, file = "/Volumes/DJC HardDrive/stan.model.output.oct.2017.rda")
+#save(mfinal.stan, file = "male.coda.2020.rda")
 
 ## Check model output
 # Create traceplots to check for mixing for site level variance
@@ -114,7 +115,7 @@ stan_dens(mfinal.stan, pars=c("DF_site"))
 round(summary(mfinal.stan, pars=c("DF_site"))$summary, 3)
 
 ## Extract site-specific random intercepts for max.freq rate
-site.intercepts <- extract(mfinal.stan, pars="site_rand_intercept")$site_rand_intercept
+site.intercepts <- rstan::extract(mfinal.stan, pars="site_rand_intercept")$site_rand_intercept
 max.freq.intercepts <- data.frame(site.intercepts[, , 3]) # Intercepts for the 8th feature. 
 names(max.freq.intercepts) <-levels(as.factor(combined.codas.all.sites$site))
 str(max.freq.intercepts)
@@ -159,7 +160,7 @@ ggplot(random.intercept.df.maxfreq, aes(x=samples, fill=site))+ geom_density(alp
   theme(axis.title.x =element_text(size=24, face="bold"))
 
 
-site.intercepts <- extract(mfinal.stan, pars="site_rand_intercept")$site_rand_intercept
+site.intercepts <- rstan::extract(mfinal.stan, pars="site_rand_intercept")$site_rand_intercept
 note.rate.intercepts <- data.frame(site.intercepts[, , 4]) # Intercepts for the 8th feature. 
 names(note.rate.intercepts) <-levels(as.factor(combined.codas.all.sites$site))
 str(note.rate.intercepts)

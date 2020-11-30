@@ -119,7 +119,7 @@ all.mfcc.combined.sub <- na.omit(all.mfcc.combined.sub)
 
 ml.model.svm <- e1071::svm(all.mfcc.combined.sub[,-c(1,2,180)], 
                            all.mfcc.combined.sub$group, kernel = "radial", 
-                           cross = 25)
+                           cross = nrow(all.mfcc.combined.sub))
 
 length(unique(all.mfcc.combined.sub$group))
 
