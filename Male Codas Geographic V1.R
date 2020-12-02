@@ -254,7 +254,9 @@ my_plot_male.individuals <-
   )) +
   geom_point(size = 3) +
   scale_color_manual(values = matlab::jet.colors (length(unique(plot.for.male.individuals$individual)))) +
-  theme_bw() + ggtitle('Male codas') + xlab('UMAP: Dim 1')+ylab('UMAP: Dim 2')+ theme(legend.position = "none")
+  # scale_shape_manual(values = 
+  #                      seq(1,length(unique(plot.for.male.individuals$individual)),0.5)) +
+  theme_bw() + ggtitle('Spectrogram features') + xlab('UMAP: Dim 1')+ylab('UMAP: Dim 2')+ theme(legend.position = "none")
 
 my_plot_male.individuals
 

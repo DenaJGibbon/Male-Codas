@@ -112,7 +112,8 @@ for(a in 1:length(files)){tryCatch({
 }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
 }
 
-all.mfcc.combined.sub <- subset(all.mfcc.combined,X177 >=1)
+all.mfcc.combined <- read.csv('all.mfcc.combined.csv')
+all.mfcc.combined.sub <- subset(all.mfcc.combined,X177 >=0.4232699)
 all.mfcc.combined.sub$site <- substr(all.mfcc.combined.sub$group,start=1,stop=2)
 
 all.mfcc.combined.sub <- na.omit(all.mfcc.combined.sub)
@@ -162,17 +163,21 @@ recorder.id.df.umap <-
 
 
 colnames(recorder.id.df.umap) <-
-  c("Comp.1", "Comp.2", "site")
+  c("Comp.1", "Comp.2", "group")
 
 
 my_plot_umap <-
   ggplot(data = recorder.id.df.umap, aes(
     x = Comp.1,
     y = Comp.2,
-    colour = site
+    colour = group
   )) +
   geom_point(size = 3) +
-  scale_color_manual(values = matlab::jet.colors(length(unique( as.factor(recorder.id.df.umap$site)))) ) +
-  theme_bw() +xlab('UMAP: Dim 1')+ylab('UMAP: Dim 2')+ggtitle('Males')+ theme(legend.position = "none")
+  scale_color_manual(values = matlab::jet.colors(length(unique( as.factor(recorder.id.df.umap$group)))) ) +
+  theme_bw() +xlab('UMAP: Dim 1')+ylab('UMAP: Dim 2')+ggtitle('Mel-frequency cepstral coefficients')+ theme(legend.position = "none")
 
 print(my_plot_umap)
+
+cowplot::plot_grid(my_plot_male.individuals,my_plot_umap)
+
+

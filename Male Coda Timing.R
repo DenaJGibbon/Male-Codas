@@ -20,7 +20,7 @@ short.files <- list.files('DuetTimingSelectionTables',recursive = T,
                           full.names = F,pattern = '.txt')
 
 short.files <- str_split_fixed(short.files,pattern = '/',n=2)[,2]
-
+  
 # Omit based on multiple recording days
 Files.ignore <- c(3,17,18,19,20,30,42,59,60,67,68,69,70,71,78,79,80)
 
