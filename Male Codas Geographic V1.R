@@ -62,12 +62,14 @@ list.codas <- split(list.sub, cumsum(c(1, diff(list.sub)) != 1))
 for(c in 1:length(list.codas)){
   temp.coda.index <- list.codas[[c]]
   
-  temp.table <-  temp.df[min(temp.coda.index):max(temp.coda.index),]
+temp.table <-  temp.df[min(temp.coda.index):max(temp.coda.index),]
 individual <- str_split_fixed( temp.table$group.label[1],pattern = '_',n=2)[,1]
 note.dur <- mean(temp.table$End.Time..s. - temp.table$Begin.Time..s.)  
 call.dur  <- max(temp.table$End.Time..s.) - min(temp.table$Begin.Time..s.)
 call.id <- unique(paste(temp.table$group.label,c,sep='.'))
+nnotes <- nrow(temp.table)
 
+if(nnotes > 1){
 mean5 <- mean(temp.table$Freq.5...Hz.)
 mean95 <-  mean(temp.table$Freq.95...Hz.)
 max5 <- max(temp.table$Freq.5...Hz.)
@@ -79,11 +81,14 @@ maxbw <-  max(temp.table$BW.90...Hz.)
 meanbw <- mean(temp.table$BW.90...Hz.)
 mindurnote <-  min(temp.table$Dur.90...s.)
 maxdurnote <- max(temp.table$Dur.90...s.)
-nnotes <- nrow(temp.table)
+
 noterate <- nrow(temp.table)/call.dur
 note1dur <- temp.table[1,]$Dur.90...s.
 note1minfreq <- temp.table[1,]$Freq.5...Hz.
 note1maxfreq <- temp.table[1,]$Freq.95...Hz.
+note2dur <- temp.table[2,]$Dur.90...s.
+note2minfreq <- temp.table[2,]$Freq.5...Hz.
+note2maxfreq <- temp.table[2,]$Freq.95...Hz.
 range.bw <- maxbw-minbw
 rest.dur <- call.dur - sum(temp.table$Dur.90...s.)
 lastnotedur <- temp.table[nrow(temp.table),]$Dur.90...s.
@@ -92,10 +97,13 @@ lastnotemaxfreq <- temp.table[nrow(temp.table),]$Freq.95...Hz.
 
 temp.coda.df <- cbind.data.frame(individual,call.id,call.dur,nnotes,
                                   min5,min95, minbw,maxbw,mean5,mean95,max5,max95,meanbw,mindurnote,
-                                 maxdurnote,noterate,note1dur,note1minfreq,note1maxfreq,range.bw,rest.dur,
+                                 maxdurnote,noterate,note1dur,note1minfreq,note1maxfreq,
+                                 note2dur,note2minfreq,note2maxfreq,
+                                 range.bw,rest.dur,
                                  lastnotedur,lastnoteminfreq,lastnotemaxfreq )
 
 malecodadf <- rbind.data.frame(malecodadf,temp.coda.df)
+}
 }
 }
 }
@@ -195,9 +203,8 @@ coefplot::multiplot(complexitymodel,complexitymodel.call.dur,
 
 ## UMAP
 
-
 male.umap <- 
-  umap::umap(combined.codas.all.sites[,c(3:13,16)],labels=as.factor(combined.codas.all.sites$Site),
+  umap::umap(combined.codas.all.sites[,c(3:27)],labels=as.factor(combined.codas.all.sites$Site),
              controlscale=TRUE,scale=3)
 
 plot.for.males <-
@@ -219,7 +226,7 @@ my_plot_males <-
 my_plot_males
 
 
-ml.model.svm.site <- e1071::svm(combined.codas.all.sites[,c(3:24)], 
+ml.model.svm.site <- e1071::svm(combined.codas.all.sites[,c(3:27)], 
                                 combined.codas.all.sites$Site, kernel = "radial", 
                                 cross = 25)
 
@@ -230,7 +237,7 @@ ml.model.svm.site$tot.accuracy
 combined.codas.all.sites$individual <- as.factor(combined.codas.all.sites$individual)
 
 male.individual.umap <- 
-  umap::umap(combined.codas.all.sites[,c(3:24)],labels=as.factor(combined.codas.all.sites$individual),
+  umap::umap(combined.codas.all.sites[,c(3:27)],labels=as.factor(combined.codas.all.sites$individual),
              controlscale=TRUE,scale=3)
 
 plot.for.male.individuals <-
@@ -252,7 +259,7 @@ my_plot_male.individuals <-
 my_plot_male.individuals
 
 
-ml.model.svm <- e1071::svm(combined.codas.all.sites[,c(3:24)], 
+ml.model.svm <- e1071::svm(combined.codas.all.sites[,c(3:27)], 
                            combined.codas.all.sites$individual, kernel = "radial", 
                            cross = 25)
 

@@ -22,7 +22,7 @@ nrow(combined.codas.all.sites)
 ggpubr::ggdensity(data=combined.codas.all.sites,x="noterate",fill = "site")+
   scale_fill_manual(values=matlab::jet.colors(length(unique(combined.codas.all.sites$site))))
 
-ggpubr::ggdensity(data=combined.codas.all.sites,x="maxbw",fill = "site")+
+ggpubr::ggdensity(data=combined.codas.all.sites,x="max95",fill = "site")+
   scale_fill_manual(values=matlab::jet.colors(length(unique(combined.codas.all.sites$site))))
 
 ggpubr::ggboxplot(data=combined.codas.all.sites,x='individual',y='range.bw')
@@ -35,8 +35,9 @@ hist((combined.codas.all.sites$note1dur))
 ## Isolate relevant features from data set
 # maxbw and max95 are highly correlated (0.9) so if we know max95 we have a pretty good idea of maxbw
 # rest dur and call.dur also correlated (0.8)
-d.manova <- combined.codas.all.sites[,c("call.dur", "min95","note1dur","note1maxfreq",
-                                        "noterate","lastnotedur","lastnotemaxfreq")]
+d.manova <- combined.codas.all.sites[,c("call.dur", "note1dur","note1maxfreq",
+                                        "note2dur","note2maxfreq",
+                                        "noterate")]
 
 ## Check the structure of the data
 cor(d.manova)

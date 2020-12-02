@@ -116,7 +116,9 @@ coda.timing.df$site[which(coda.timing.df $individual=='CRIP')] <- 'SA'
 
 ggpubr::ggdensity(data=coda.timing.df,x="coda.timing",fill = "site")
 
-ggpubr::ggboxplot(data=coda.timing.df,x="individual" , y="coda.timing",fill = "site")+
+coda.timing.df$individual <- as.factor(as.integer(coda.timing.df$individual))
+ggpubr::ggboxplot(data=coda.timing.df,x="individual" , y="coda.timing",fill = "site",
+                  palette = matlab::jet.colors(length(unique(coda.timing.df$site))))+
   xlab('Male')+ ylab('Coda timing relative to female (s)')+rotate_x_text(angle = 90)
 
 ggpubr::ggerrorplot(data=coda.timing.df,x="individual" , y="coda.duration",color = "site")

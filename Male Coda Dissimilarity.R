@@ -5,12 +5,11 @@ library(spdep)
 
 male.gps.data <- read.csv('male.coda.gps.csv')
 gps.data.updated <- merge(combined.codas.all.sites,male.gps.data, by.x = 'individual', by.y = 'pair')
-gps.data.updated <- droplevels(subset(gps.data.updated, site=="DK"))
+gps.data.updated <- droplevels(subset(gps.data.updated, site=="SA"))
 
-gps.data.updated[which(is.na(gps.data.updated))]
+#gps.data.updated <- subset(gps.data.updated,nnotes >3)
 
-plot(gps.data.updated$lat,gps.data.updated$lon)
-
+plot(gps.data.updated$lon,gps.data.updated$lat)
 geo_distance <- spDists(cbind(gps.data.updated$lon,gps.data.updated$lat),longlat = T)
 geo_matrix <- as.matrix(geo_distance)
 (geo_matrix[1,])
